@@ -3,57 +3,42 @@
 import sys
 import skimage
 from skimage import io
+from north import NORTH
+from point import Point
 
-def projection( O , A , B , Z ):
-    x1 = A[0] - O[0]
-    y1 = A[1] - O[1]
-    x2 = B[0] - O[0]
-    y2 = B[1] - O[1]
-    x3 = Z[0] - O[0]
-    y3 = Z[1] - O[1]
+class LocationToPixel():
+    def __init__(self, config):
+        self.config = config
 
-    m  = 1/(x1*y2-x2*y1) *( y2*x3  - x2*y3 )
-    n  = 1/(x1*y2-x2*y1) *( -y1*x3 + x1*y3 )
-    
-    return [m,n]
+    def projection(self, Z):
+        location = self.config['geocode']
+        V1 = location[1] - location[0]
+        V2 = location[2] - location[0]
+        V3 = Z - location[0]
 
-def getPixel( O , A , B , Op , Ap , Bp , m , n ):
+        m  = 1. / (V1.x * V2.y - V2.x * V1.y) * ( V2.y * V3.x  - V2.x * V3.y )
+        n  = 1. / (V1.x * V2.y - V2.x * V1.y) * ( -V1.y * V3.x + V1.x * V3.y )
+        
+        return [m, n]
 
-    # OA,OB,O'A',O'B'
-    X    = [ A[0]  - O[0]  , A[1]  - O[1]  ]
-    Y    = [ B[0]  - O[0]  , B[1]  - O[1]  ]
-    Xp   = [ Ap[0] - Op[0] , Ap[1] - Op[1] ]
-    Yp   = [ Bp[0] - Op[0] , Bp[1] - Op[1] ]
-    # |X| , |Y|
-    X_l  = ( X[1]  ** 2 + X[1]  ** 2 ) ** 0.5 
-    Y_l  = ( Y[0]  ** 2 + Y[1]  ** 2 ) ** 0.5
-    Xp_l = ( Xp[0] ** 2 + Xp[1] ** 2 ) ** 0.5 
-    Yp_l = ( Yp[0] ** 2 + Yp[1] ** 2 ) ** 0.5
-    # coefficient of alpha = |X| / |X_p|
-    # Z = mX+nY = maX' + nbY' = Z'       
-    # Pixel Position
-    px   = m * Xp[0] + n * Yp[0] + Op[0]
-    py   = m * Xp[1] + n * Yp[1] + Op[1]
-    
-    return [round(px),round(py)]
+    def getPixel(self, m, n):
+        pixel = self.config['pixel']
+        Xp = pixel[1] - pixel[0]
+        Yp = pixel[2] - pixel[0]
+        
+        # Z = mX+nY = maX' + nbY' = Z'       
+        # Pixel Position
+        Zp = pixel[0] + (Xp * m) + (Yp * n)
+        return Point(round(Zp.x), round(Zp.y))
 
-    
-    
-# Pixel Position and Lat/Lon Position
-# O  / A  / B
-# O' / A' / B'
-Op = [153,261]
-Ap = [317,89 ]
-Bp = [462,247]
-O  = [24.438733,120.623633]
-A  = [25.117488,121.281154] 
-B  = [24.484190,121.860073]
-Z  = [ float(sys.argv[1]) , float(sys.argv[2]) ]
-[m , n] = projection(O,A,B,Z)
-[px,py] = getPixel(O,A,B,Op,Ap,Bp,m,n)
+    def get(self, Z):
+        [m, n] = self.projection(Z)
+        return self.getPixel(m, n)
 
-# Handle Graph
-img_path = 'test.jpg' 
-graph  = io.imread(img_path)
-print ( [px,py] )
-print ( graph[py,px] )
+NN = LocationToPixel(NORTH)
+
+if __name__ == '__main__':
+    # Pixel Position and Lat/Lon Position
+    Z  = Point(25.215724, 121.701252)
+
+    print(NN.get(Z)) # (422, 63)
