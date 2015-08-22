@@ -35,5 +35,6 @@ $("#submit").click(function() {
         }).appendTo("#show");*/
     });
 
+    event.preventDefault();
 
 });
