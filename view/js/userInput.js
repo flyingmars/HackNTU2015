@@ -2,13 +2,15 @@ var input = [];
 $("#submit").click(function() {
     input[0] = $('#longitude').val();
     input[1] = $('#latitude').val();
-    input[2] = $('#date').val();
-    input[3] = $('#time').val();
+    input[2] = $('#date').val() + " " + $('#time').val();
 
+    //show all elem for input
+    /* 
     $("#show").append("<p>longitude: " + input[0] +
         "<br>latitude: " + input[1] +
         "<br>date: " + input[2] +
         "<br>time: " + input[3] + "</p>");
+    */
 
     /*for (i = 0; i < 4; i++) {
         alert(input[i]);
@@ -21,13 +23,19 @@ $("#submit").click(function() {
         time: input[2]
     };
 
-    $.getJSON("http://temp1.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
-        var items = [];
-        $.each(data, function(key, val) {
-            items.push("<p> The " + key + " of rain is " + val + ".</p>");
-        });
+    $.getJSON("http://temp2.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
 
-        $("#show").append(items.join(""));
+        if (data["status"] == "success") {
+            //alert("success");
+            var items = [];
+            $.each(data["result"], function(key, val) {
+                items.push("<p> The " + key + " is " + val + ".</p>");
+            });
+
+            $("#show").append(items.join(""));
+        } else {
+            alert("error");
+        }
 
         /*$("<ul/>", {
             "class": "my-new-list",
