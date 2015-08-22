@@ -1,0 +1,3 @@
+<?php
+define('mysql_user', '');
+define('mysql_pass', '');
