@@ -5,6 +5,7 @@ import numpy as np
 import skimage
 from skimage import io
 from skimage.viewer import ImageViewer
+from colors import colors
 
 def isSameColor( color1 , color2 , color_err):
     if ( abs(color1[0] - color2[0]) <= color_err and
@@ -14,12 +15,11 @@ def isSameColor( color1 , color2 , color_err):
     else :
         return False
 
-def diffusion( color , graph ):
-    error     = 10
+def diffusion( color , graph , error ):
     color_err = 10
 
     [row,col,temp] = graph.shape
-    canvas   = np.zeros([row,col,3],dtype='int')
+    canvas   = np.zeros([row,col],dtype='int')
 
     for i in range(row):
         for j in range(col):
@@ -28,26 +28,35 @@ def diffusion( color , graph ):
                 mrow = min( row-1 , i+error+1 )
                 lcol = max(  0    , j-error   )
                 mcol = min( col-1 , j+error+1 )
-                canvas[ lrow:mrow , lcol:mcol ] = color
+                canvas[ lrow:mrow , lcol:mcol ] = 1
     return canvas
 
-colors  = [ 
-              { "color" : [254, 0 , 0 ] , "value" : 40 }, 
-              { "color" : [199, 0 , 0 ] , "value" : 45 }, 
-              { "color" : [149, 1 , 0 ] , "value" : 50 }, 
-              { "color" : [253, 0 ,249] , "value" : 55 }, 
-              { "color" : [153, 0 ,255] , "value" : 60 }, 
-              { "color" : [255,255,255] , "value" : 65 }, 
-          ]
-
-graph_path = [ 'a.jpg' , 'b.jpg' ]
+graph_path = [ 'img/2015-08-22_2306.2MOS3NC.jpg' ,
+               'img/2015-08-22_2312.2MOS3NC.jpg' 
+             ]
 graph = [ io.imread(graph_path[0]) , io.imread(graph_path[1])]
 canvas  = []
 for i in range(len(colors)) :
-    canvas1    = diffusion( colors[i]['color'] , graph[0] )
-    canvas2    = diffusion( colors[i]['color'] , graph[1] )
+    canvas1    = diffusion( colors[i]['color'] , graph[0] , colors[i]['error'])
+    canvas2    = diffusion( colors[i]['color'] , graph[1] , colors[i]['error'])
     canvast    = canvas2 - canvas1
     canvastF   = canvast < 0 
     canvast[canvastF] = 0
-    io.imsave('./%d.jpg' % i , np.array(canvast,'uint8') )
+    canvas.append( np.array(canvast,'bool') )
 
+[row,col,temp] = graph[0].shape
+result = np.zeros([row,col,3],dtype='int')
+for i in range(row):
+    for j in range(col) :
+        for color in range(len(colors)):
+            if ( canvas[color][i,j] == True ):
+                result[i,j] = [ 
+                    max( result[i,j][0] , colors[color]['intensity']),
+                    0,
+                    0
+                ]
+
+
+resultFilter = result > 255
+result[resultFilter] = 255
+io.imsave('result.jpg' , np.array( result , 'uint8' ) )
