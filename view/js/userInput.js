@@ -15,13 +15,25 @@ $("#submit").click(function() {
     }*/
 
 
-    var data ={
-    	longitude: input[0],
+    var elem = {
+        longitude: input[0],
         latitude: input[1],
         time: input[2]
     };
 
-    $.getJSON("http://temp1.mar98.tk/HackNTU2015/forecast.php", data);
+    $.getJSON("http://temp1.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
+        var items = [];
+        $.each(data, function(key, val) {
+            items.push("<p> The " + key + " of rain is " + val + ".</p>");
+        });
+
+        $("#show").append(items.join(""));
+
+        /*$("<ul/>", {
+            "class": "my-new-list",
+            html: items.join("")
+        }).appendTo("#show");*/
+    });
 
 
 });
