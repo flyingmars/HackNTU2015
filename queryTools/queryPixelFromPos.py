@@ -1,6 +1,7 @@
-import Image
-import sys
+#!/usr/bin/env python3
 
+import sys
+import Image
 
 def projection( O , A , B , Z ):
     x1 = A[0] - O[0]
@@ -49,13 +50,13 @@ Ap = [317,89 ]
 Bp = [462,247]
 O  = [24.438733,120.623633]
 A  = [25.117488,121.281154] 
-B  = [24.484190,121.860073] ]
+B  = [24.484190,121.860073]
 Z  = [sys.argv[1],sys.argv[2]]
 [m , n] = projection(O,A,B,Z)
 [px,py] = getPixel(O,A,B,Op,Ap,Bp,m,n)
 
 # Handle Graph
 img_path = './test.jpg' 
-graph  = Image.open(img_path)
-pixfile = graph.load()
-print ( pixfile[px,py] )
+graph  = Image.open(img_path).convert('RGB')
+pix    = graph.load()
+print ( pix[px,py] )
