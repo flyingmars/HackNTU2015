@@ -14,14 +14,12 @@ def isSameColor( color1 , color2 , color_err):
     else :
         return False
 
-def diffusion( color , graphpath ):
+def diffusion( color , graph ):
     error     = 10
     color_err = 10
 
-    img_path  = graphpath
-    graph     = io.imread(img_path)
     [row,col,temp] = graph.shape
-    canvas   = np.zeros([row,col,3],dtype='uint8')
+    canvas   = np.zeros([row,col,3],dtype='int')
 
     for i in range(row):
         for j in range(col):
@@ -30,13 +28,28 @@ def diffusion( color , graphpath ):
                 mrow = min( row , i+error+1 )
                 lcol = max(  0  , j-error   )
                 mcol = min( col , j+error+1 )
-                canvas[ lrow:mrow , lcol:mcol ] = [255,0,0]
+                canvas[ lrow:mrow , lcol:mcol ] = color
     return canvas
 
-red     = [254,0,0]
-canvas1 = diffusion( red , 'a.jpg' )
-canvas2 = diffusion( red , 'b.jpg' )
-canvas3 = canvas2 - canvas1
-viewer  = ImageViewer(canvas3)
-viewer.show()
+colors  = [ 
+              { "color" : [254, 0 , 0 ] , "value" : 40 }, 
+              { "color" : [199, 0 , 0 ] , "value" : 45 }, 
+              { "color" : [149, 1 , 0 ] , "value" : 50 }, 
+              { "color" : [253, 0 ,249] , "value" : 55 }, 
+              { "color" : [153, 0 ,255] , "value" : 60 }, 
+              { "color" : [255,255,255] , "value" : 65 }, 
+          ]
+
+graph_path = [ 'a.jpg' , 'b.jpg' ]
+graph = [ io.imread(graph_path[0]) , io.imread(graph_path[1])]
+canvas  = []
+for i in range(len(colors)) :
+    canvas1    = diffusion( colors[i]['color'] , graph[0] )
+    canvas2    = diffusion( colors[i]['color'] , graph[1] )
+    canvast    = canvas2 - canvas1
+    canvastF   = canvast < 0 
+    canvast[canvastF] = 0
+    canvas.append( canvast )
+    viewer     = ImageViewer(canvas[i])
+    viewer.show()
 
