@@ -65,88 +65,86 @@
                                 <input style="width: 90%" type="text" class="form-control" id="latitude" placeholder="ex. 25.01">
                             </div>
                         </div>
+						
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">年</label>
-                            <div class="col-sm-10">
-                                <select style="width: 90%" class="form-control">
-					<option>2015</option>
-				</select>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+									<option>2015</option>
+								</select>
+							</div>
+							<label for="name" class="col-sm-1 control-label">月</label>
+                            <div class="col-sm-2">
+                                <select class="form-control">
+									<option>08</option>
+								</select>
                             </div>
+							<label for="name" class="col-sm-1 control-label">日</label>
+								<div class="col-sm-2">
+									<select class="form-control">
+										<option>01</option>
+										<option>02</option>
+										<option>03</option>
+										<option>04</option>
+										<option>05</option>
+										<option>06</option>
+										<option>07</option>
+										<option>08</option>
+										<option>09</option>
+										<script>
+										for(var i = 10; i <= 31; i++){
+											document.write("<option>" + i + "</option>");
+										}
+										</script>
+									</select>
+								</div>
+				
                         </div>
 
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">月</label>
-                            <div class="col-sm-10">
-                                <select style="width: 90%" class="form-control">
-					<option>08</option>
-				</select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">日</label>
-                            <div class="col-sm-10">
-                                <select style="width: 90%" class="form-control">
-					<option>01</option>
-					<option>02</option>
-					<option>03</option>
-					<option>04</option>
-					<option>05</option>
-					<option>06</option>
-					<option>07</option>
-					<option>08</option>
-					<option>09</option>
-					<script>
-						for(var i = 10; i <= 31; i++){
-							document.write("<option>" + i + "</option>");
-						}
-					</script>
-				</select>
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">時</label>
-                            <div class="col-sm-10">
-                                <select style="width: 90%" class="form-control">
-					<option>00</option>
-					<option>01</option>
-					<option>02</option>
-					<option>03</option>
-					<option>04</option>
-					<option>05</option>
-					<option>06</option>
-					<option>07</option>
-					<option>08</option>
-					<option>09</option>
-					<script>
-						for(var i = 10; i <= 23; i++){
-							document.write("<option>" + i + "</option>");
-						}
-					</script>
-				</select>
+                            <div class="col-sm-3">
+                                <select class="form-control">
+									<option>00</option>
+									<option>01</option>
+									<option>02</option>
+									<option>03</option>
+									<option>04</option>
+									<option>05</option>
+									<option>06</option>
+									<option>07</option>
+									<option>08</option>
+									<option>09</option>
+									<script>
+										for(var i = 10; i <= 23; i++){
+											document.write("<option>" + i + "</option>");
+										}
+									</script>
+								</select>
+                            </div>
+							<label for="name" class="col-sm-2 control-label">分</label>
+                            <div class="col-sm-3">
+                                <select class="form-control">
+									<option>00</option>
+									<option>01</option>
+									<option>02</option>
+									<option>03</option>
+									<option>04</option>
+									<option>05</option>
+									<option>06</option>
+									<option>07</option>
+									<option>08</option>
+									<option>09</option>
+									<script>
+										for(var i = 10; i <= 59; i++){
+											document.write("<option>" + i + "</option>");
+										}
+									</script>
+								</select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">分</label>
-                            <div class="col-sm-10">
-                                <select style="width: 90%" class="form-control">
-					<option>00</option>
-					<option>01</option>
-					<option>02</option>
-					<option>03</option>
-					<option>04</option>
-					<option>05</option>
-					<option>06</option>
-					<option>07</option>
-					<option>08</option>
-					<option>09</option>
-					<script>
-						for(var i = 10; i <= 59; i++){
-							document.write("<option>" + i + "</option>");
-						}
-					</script>
-				</select>
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button id="submit" type="submit" class="btn btn-default">提交</button>
