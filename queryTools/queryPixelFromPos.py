@@ -1,7 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 import sys
-import Image
+import skimage
+from skimage import io
 
 def projection( O , A , B , Z ):
     x1 = A[0] - O[0]
@@ -24,19 +25,15 @@ def getPixel( O , A , B , Op , Ap , Bp , m , n ):
     Xp   = [ Ap[0] - Op[0] , Ap[1] - Op[1] ]
     Yp   = [ Bp[0] - Op[0] , Bp[1] - Op[1] ]
     # |X| , |Y|
-    X_l  = ( X[0]  ** 2 + X[1]  ** 2 ) ** 0.5 
+    X_l  = ( X[1]  ** 2 + X[1]  ** 2 ) ** 0.5 
     Y_l  = ( Y[0]  ** 2 + Y[1]  ** 2 ) ** 0.5
     Xp_l = ( Xp[0] ** 2 + Xp[1] ** 2 ) ** 0.5 
     Yp_l = ( Yp[0] ** 2 + Yp[1] ** 2 ) ** 0.5
     # coefficient of alpha = |X| / |X_p|
-    co_a = X_l / Xp_l
-    co_b = Y_l / Yp_l   
     # Z = mX+nY = maX' + nbY' = Z'       
-    m_p  = m * co_a
-    n_p  = n * co_a 
     # Pixel Position
-    px   = m_p * Xp[0] + n_p * Yp[0] + Op[0]
-    py   = m_p * Xp[1] + n_p * Yp[1] + Op[1]
+    px   = m * Xp[0] + n * Yp[0] + Op[0]
+    py   = m * Xp[1] + n * Yp[1] + Op[1]
     
     return [round(px),round(py)]
 
@@ -51,12 +48,12 @@ Bp = [462,247]
 O  = [24.438733,120.623633]
 A  = [25.117488,121.281154] 
 B  = [24.484190,121.860073]
-Z  = [sys.argv[1],sys.argv[2]]
+Z  = [ float(sys.argv[1]) , float(sys.argv[2]) ]
 [m , n] = projection(O,A,B,Z)
 [px,py] = getPixel(O,A,B,Op,Ap,Bp,m,n)
 
 # Handle Graph
-img_path = './test.jpg' 
-graph  = Image.open(img_path).convert('RGB')
-pix    = graph.load()
-print ( pix[px,py] )
+img_path = 'test.jpg' 
+graph  = io.imread(img_path)
+print ( [px,py] )
+print ( graph[py,px] )
