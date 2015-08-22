@@ -6,8 +6,10 @@ $.getJSON("http://temp1.mar98.tk/HackNTU2015/forecast.php", function(data) {
         items.push("<p> The " + key + " of rain is " + val + ".</p>");
     });
 
-    $("<ul/>", {
+    $("#show").append(items.join(""));
+
+    /*$("<ul/>", {
         "class": "my-new-list",
         html: items.join("")
-    }).appendTo("#show");
+    }).appendTo("#show");*/
 });

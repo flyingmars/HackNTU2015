@@ -87,6 +87,7 @@
                     </form>
                 </div>
                 <div id="show" class="col-md-4">
+                    <h4>結果預覽</h4>
                 </div>
             </div>
             <!--row-->
@@ -98,19 +99,7 @@
         </footer>
     </div>
     <!--container-->
-    <script type="text/javascript">
-    var input = [];
-    $("#submit").click(function() {
-        input[0] = $('#longitude').val();
-        input[1] = $('#latitude').val();
-        input[2] = $('#date').val();
-        input[3] = $('#time').val();
-
-        for(i = 0; i < 4; i++){
-            alert(input[i]);
-        }
-    });
-    </script>
+    <script type="text/javascript" src="js/userInput.js"></script>
 </body>
 
 </html>
