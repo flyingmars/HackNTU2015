@@ -24,10 +24,10 @@ def diffusion( color , graph ):
     for i in range(row):
         for j in range(col):
             if ( isSameColor( graph[i,j] , color , color_err ) ) :
-                lrow = max(  0  , i-error   )
-                mrow = min( row , i+error+1 )
-                lcol = max(  0  , j-error   )
-                mcol = min( col , j+error+1 )
+                lrow = max(  0    , i-error   )
+                mrow = min( row-1 , i+error+1 )
+                lcol = max(  0    , j-error   )
+                mcol = min( col-1 , j+error+1 )
                 canvas[ lrow:mrow , lcol:mcol ] = color
     return canvas
 
@@ -49,7 +49,5 @@ for i in range(len(colors)) :
     canvast    = canvas2 - canvas1
     canvastF   = canvast < 0 
     canvast[canvastF] = 0
-    canvas.append( canvast )
-    viewer     = ImageViewer(canvas[i])
-    viewer.show()
+    io.imsave('./%d.jpg' % i , np.array(canvast,'uint8') )
 
