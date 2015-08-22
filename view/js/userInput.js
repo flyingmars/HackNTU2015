@@ -10,19 +10,6 @@ $("#submit").click(function() {
 
     var $time = input[2]+"-"+input[3]+"-"+input[4]+" "+input[5]+":"+input[6]+":00";
 
-    //show all elem for input
-    /* 
-    $("#show").append("<p>longitude: " + input[0] +
-        "<br>latitude: " + input[1] +
-        "<br>date: " + input[2] +
-        "<br>time: " + input[3] + "</p>");
-    */
-
-    /*for (i = 0; i < 4; i++) {
-        alert(input[i]);
-    }*/
-
-
     var elem = {
         longitude: input[0],
         latitude: input[1],
@@ -32,23 +19,34 @@ $("#submit").click(function() {
     $.getJSON("http://temp2.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
 
         if (data["status"] == "success") {
-            //alert("success");
             var items = [];
             $.each(data["result"], function(key, val) {
                 items.push("<p> The " + key + " is " + val + ".</p>");
             });
-
             $("#show").append(items.join(""));
         } else {
             alert("error");
         }
-
-        /*$("<ul/>", {
-            "class": "my-new-list",
-            html: items.join("")
-        }).appendTo("#show");*/
     });
-
     event.preventDefault();
-
 });
+
+function initMap() {
+  var geocoder = new google.maps.Geocoder();
+  $("#location_submit").click(function(e){
+	geocodeAddress(geocoder);
+	e.preventDefault();
+  });
+}
+
+function geocodeAddress(geocoder) {
+  var location = document.getElementById('location').value;
+  geocoder.geocode({'address': location}, function(results, status) {
+    if (status === google.maps.GeocoderStatus.OK) {
+	  $("#latitude").val(results[0].geometry.location.G);
+	  $("#longitude").val(results[0].geometry.location.K);
+    } else {
+      console.log('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
