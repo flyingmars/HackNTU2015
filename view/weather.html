@@ -17,6 +17,7 @@
     <script src="./js/ie-emulation-modes-warning.js"></script>
     <!--[if lt IE 9]><script src=https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js></script><script src=https://oss.maxcdn.com/respond/1.4.2/respond.min.js></script><![endif]-->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!--this js reads probability and intensity-->
     <script src="./js/getInfo.js"></script>
 </head>
 
@@ -57,30 +58,30 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">經度(東經)</label>
                             <div class="col-sm-10">
-                                <input style="width: 90%" type="text" class="form-control" id="name" placeholder="ex. 121.34">
+                                <input style="width: 90%" type="text" class="form-control" id="longitude" placeholder="ex. 121.34">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">緯度(北緯)</label>
                             <div class="col-sm-10">
-                                <input style="width: 90%" type="text" class="form-control" id="name" placeholder="ex. 25.01">
+                                <input style="width: 90%" type="text" class="form-control" id="latitude" placeholder="ex. 25.01">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">日期</label>
                             <div class="col-sm-10">
-                                <input style="width: 90%" type="text" class="form-control" id="name" placeholder="ex. 2015/08/22">
+                                <input style="width: 90%" type="text" class="form-control" id="date" placeholder="ex. 2015/08/22">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">時間</label>
                             <div class="col-sm-10">
-                                <input style="width: 90%" type="text" class="form-control" id="name" placeholder="ex. 19:00">
+                                <input style="width: 90%" type="text" class="form-control" id="time" placeholder="ex. 19:00">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">提交</button>
+                                <button id="submit" type="submit" class="btn btn-default">提交</button>
                             </div>
                         </div>
                     </form>
@@ -97,6 +98,19 @@
         </footer>
     </div>
     <!--container-->
+    <script type="text/javascript">
+    var input = [];
+    $("#submit").click(function() {
+        input[0] = $('#longitude').val();
+        input[1] = $('#latitude').val();
+        input[2] = $('#date').val();
+        input[3] = $('#time').val();
+
+        for(i = 0; i < 4; i++){
+            alert(input[i]);
+        }
+    });
+    </script>
 </body>
 
 </html>
