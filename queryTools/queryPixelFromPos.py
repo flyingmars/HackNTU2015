@@ -50,7 +50,7 @@ if __name__ == '__main__':
     import skimage
     import skimage.io
 
-    img = skimage.io.imread('../movingDetect/result.jpg');
+    img = skimage.io.imread('./movingDetect/result.jpg');
     a = img[Pz.x, Pz.y]
 
     import json
