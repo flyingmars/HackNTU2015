@@ -54,4 +54,4 @@ if __name__ == '__main__':
     a = img[Pz.x, Pz.y]
 
     import json
-    print(json.dumps({'x': Pz.x, 'y': Pz.y, 'value': a[0]}))
+    print(json.dumps({'x': Pz.x, 'y': Pz.y, 'value': int(a[0])}))
