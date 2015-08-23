@@ -17,15 +17,16 @@ $("#submit").click(function() {
     };
 
     $.getJSON("http://temp2.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
+        $("#jump-body").empty();
 
         if (data["status"] == "success") {
             var items = [];
             $.each(data["result"], function(key, val) {
                 items.push("<p> The " + key + " is " + val + ".</p>");
             });
-            $("#show").append(items.join(""));
+            $("#jump-body").append(items.join(""));
         } else {
-            alert("error");
+            $("#jump-body").append("error");
         }
     });
     event.preventDefault();
