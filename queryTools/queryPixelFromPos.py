@@ -47,5 +47,11 @@ if __name__ == '__main__':
 
     Pz = NN.get(Z)
 
+    import skimage
+    import skimage.io
+
+    img = skimage.io.imread('../movingDetect/result.jpg');
+    a = img[Pz.x, Pz.y]
+
     import json
-    print(json.dumps({'x': Pz.x, 'y': Pz.y}))
+    print(json.dumps({'x': Pz.x, 'y': Pz.y, 'value': a[0]}))
