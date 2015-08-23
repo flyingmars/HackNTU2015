@@ -21,10 +21,10 @@ $("#submit").click(function() {
 
         if (data["status"] == "success") {
             var items = [];
-            $.each(data["result"], function(key, val) {
-                items.push("<p> The " + key + " is " + val + ".</p>");
-            });
-            $("#jump-body").append(items.join(""));
+
+            var output = "降雨機率是 " + data["result"]["risklevel"] / 255; 
+
+            $("#jump-body").append(output);
         } else {
             $("#jump-body").append("error");
         }
