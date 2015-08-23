@@ -38,7 +38,14 @@ class LocationToPixel():
 NN = LocationToPixel(NORTH)
 
 if __name__ == '__main__':
-    # Pixel Position and Lat/Lon Position
-    Z  = Point(25.215724, 121.701252)
+    import sys
 
-    print(NN.get(Z)) # (422, 63)
+    if len(sys.argv) != 3:
+        exit(-1)
+    # Pixel Position and Lat/Lon Position
+    Z  = Point(float(sys.argv[1]), float(sys.argv[2]))
+
+    Pz = NN.get(Z)
+
+    import json
+    print(json.dumps({'x': Pz.x, 'y': Pz.y}))
