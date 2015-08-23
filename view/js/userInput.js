@@ -17,6 +17,8 @@ $("#submit").click(function() {
     };
 
     $.getJSON("http://temp2.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
+    	// logging the results
+    	console.log(data);
 
         if (data["status"] == "success") {
             var items = [];
