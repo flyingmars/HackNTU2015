@@ -17,17 +17,18 @@ $("#submit").click(function() {
     };
 
     $.getJSON("http://temp2.mar98.tk/HackNTU2015/forecast.php", elem, function(data) {
+        $("#jump-body").empty();
     	// logging the results
     	console.log(data);
 
         if (data["status"] == "success") {
             var items = [];
-            $.each(data["result"], function(key, val) {
-                items.push("<p> The " + key + " is " + val + ".</p>");
-            });
-            $("#show").append(items.join(""));
+
+            var output = "降雨機率是 " + data["result"]["risklevel"] / 255; 
+
+            $("#jump-body").append(output);
         } else {
-            alert("error");
+            $("#jump-body").append("error");
         }
     });
     event.preventDefault();
