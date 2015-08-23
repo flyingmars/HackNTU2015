@@ -23,6 +23,10 @@ def diffusion( color , graph , error ):
 
     for i in range(row):
         for j in range(col):
+            if ( i < 167 and j < 63 ):
+                continue
+            if ( i < 324 and j < 50 ):
+                continue
             if ( isSameColor( graph[i,j] , color , color_err ) ) :
                 lrow = max(  0    , i-error   )
                 mrow = min( row-1 , i+error+1 )
@@ -40,8 +44,9 @@ for i in range(len(colors)) :
     canvas1    = diffusion( colors[i]['color'] , graph[0] , colors[i]['error'])
     canvas2    = diffusion( colors[i]['color'] , graph[1] , colors[i]['error'])
     canvast    = canvas2 - canvas1
-    canvastF   = canvast < 0 
+    canvastF   = canvast < 0
     canvast[canvastF] = 0
+    canvast    = canvast | canvas2 
     canvas.append( np.array(canvast,'bool') )
 
 [row,col,temp] = graph[0].shape
