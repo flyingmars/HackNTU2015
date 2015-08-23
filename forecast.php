@@ -21,9 +21,8 @@ echo json_encode(array('status' => 'success', 'result' => array(
 	'latitude' => $latitude, 
 	'longitude' => $longitude,
 	'time' => $time,
-	'pixel' => $pixel,
-	'probability' => 0.9,
-	'intensity' => 3.0
+	'pixel' => array('x' => $pixel['x'], 'y' => $pixel['y']),
+	'risklevel' => $pixel['value']
 )));
 
 function run($cmd) {
