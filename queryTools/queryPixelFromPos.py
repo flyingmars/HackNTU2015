@@ -51,7 +51,7 @@ if __name__ == '__main__':
     import skimage.io
 
     img = skimage.io.imread('./movingDetect/result.jpg');
-    a = img[Pz.x, Pz.y]
+    a = img[Pz.y, Pz.x]
 
     import json
     print(json.dumps({'x': Pz.x, 'y': Pz.y, 'value': int(a[0])}))
